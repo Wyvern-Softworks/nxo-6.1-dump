@@ -1,0 +1,84 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <AssemblyName>NXO</AssemblyName>
+    <GenerateAssemblyInfo>False</GenerateAssemblyInfo>
+    <TargetFramework>netstandard2.1</TargetFramework>
+    <GorillaTagRoot>C:\Program Files (x86)\Steam\steamapps\common\Gorilla Tag</GorillaTagRoot>
+    <GorillaManagedPath>$(GorillaTagRoot)\Gorilla Tag_Data\Managed</GorillaManagedPath>
+    <BepInExCorePath>$(GorillaTagRoot)\BepInEx\core</BepInExCorePath>
+  </PropertyGroup>
+  <PropertyGroup>
+    <LangVersion>14.0</LangVersion>
+		<AllowUnsafeBlocks>False</AllowUnsafeBlocks>
+    <CheckForOverflowUnderflow>False</CheckForOverflowUnderflow>
+  </PropertyGroup>
+  <PropertyGroup>
+    <RootNamespace />
+  </PropertyGroup>
+  <ItemGroup>
+    <None Remove="NXO.Resources.acidtrip" />
+    <None Remove="NXO.Resources.click1" />
+    <None Remove="NXO.Resources.minecraftclick" />
+    <None Remove="NXO.Resources.minecraftfont" />
+    <None Remove="NXO.Resources.nxostevestuff" />
+    <None Remove="NXO.Resources.pinwheelshader" />
+    <None Remove="NXO.Resources.thocky" />
+    <None Remove="NXO.Resources.disconnecticon.png" />
+    <None Remove="NXO.Resources.homeicon.png" />
+    <None Remove="NXO.Resources.searchicon.png" />
+    <None Remove="NXO.Resources.NotificationSound.wav" />
+    <None Remove="NXO.Resources.SteamClose.wav" />
+    <None Remove="NXO.Resources.SteamOpen.wav" />
+    <EmbeddedResource Include="NXO.Resources.acidtrip" LogicalName="NXO.Resources.acidtrip" />
+    <EmbeddedResource Include="NXO.Resources.click1" LogicalName="NXO.Resources.click1" />
+    <EmbeddedResource Include="NXO.Resources.minecraftclick" LogicalName="NXO.Resources.minecraftclick" />
+    <EmbeddedResource Include="NXO.Resources.minecraftfont" LogicalName="NXO.Resources.minecraftfont" />
+    <EmbeddedResource Include="NXO.Resources.nxostevestuff" LogicalName="NXO.Resources.nxostevestuff" />
+    <EmbeddedResource Include="NXO.Resources.pinwheelshader" LogicalName="NXO.Resources.pinwheelshader" />
+    <EmbeddedResource Include="NXO.Resources.thocky" LogicalName="NXO.Resources.thocky" />
+    <EmbeddedResource Include="NXO.Resources.disconnecticon.png" LogicalName="NXO.Resources.disconnecticon.png" />
+    <EmbeddedResource Include="NXO.Resources.homeicon.png" LogicalName="NXO.Resources.homeicon.png" />
+    <EmbeddedResource Include="NXO.Resources.searchicon.png" LogicalName="NXO.Resources.searchicon.png" />
+    <EmbeddedResource Include="NXO.Resources.NotificationSound.wav" LogicalName="NXO.Resources.NotificationSound.wav" />
+    <EmbeddedResource Include="NXO.Resources.SteamClose.wav" LogicalName="NXO.Resources.SteamClose.wav" />
+    <EmbeddedResource Include="NXO.Resources.SteamOpen.wav" LogicalName="NXO.Resources.SteamOpen.wav" />
+  </ItemGroup>
+  <ItemGroup>
+    <Reference Include="UnityEngine" HintPath="$(GorillaManagedPath)\UnityEngine.dll" Private="False" />
+    <Reference Include="UnityEngine.AssetBundleModule" HintPath="$(GorillaManagedPath)\UnityEngine.AssetBundleModule.dll" Private="False" />
+    <Reference Include="UnityEngine.CoreModule" HintPath="$(GorillaManagedPath)\UnityEngine.CoreModule.dll" Private="False" />
+    <Reference Include="UnityEngine.AudioModule" HintPath="$(GorillaManagedPath)\UnityEngine.AudioModule.dll" Private="False" />
+    <Reference Include="UnityEngine.UnityWebRequestModule" HintPath="$(GorillaManagedPath)\UnityEngine.UnityWebRequestModule.dll" Private="False" />
+    <Reference Include="UnityEngine.IMGUIModule" HintPath="$(GorillaManagedPath)\UnityEngine.IMGUIModule.dll" Private="False" />
+    <Reference Include="Unity.TextMeshPro" HintPath="$(GorillaManagedPath)\Unity.TextMeshPro.dll" Private="False" />
+    <Reference Include="Assembly-CSharp" HintPath="$(GorillaManagedPath)\Assembly-CSharp.dll" Private="False" />
+    <Reference Include="Fusion.Runtime" HintPath="$(GorillaManagedPath)\Fusion.Runtime.dll" Private="False" />
+    <Reference Include="UnityEngine.PhysicsModule" HintPath="$(GorillaManagedPath)\UnityEngine.PhysicsModule.dll" Private="False" />
+    <Reference Include="Photon3Unity3D" HintPath="$(GorillaManagedPath)\Photon3Unity3D.dll" Private="False" />
+    <Reference Include="PhotonRealtime" HintPath="$(GorillaManagedPath)\PhotonRealtime.dll" Private="False" />
+    <Reference Include="PhotonUnityNetworking" HintPath="$(GorillaManagedPath)\PhotonUnityNetworking.dll" Private="False" />
+    <Reference Include="PlayFab" HintPath="$(GorillaManagedPath)\PlayFab.dll" Private="False" />
+    <Reference Include="UnityEngine.UI" HintPath="$(GorillaManagedPath)\UnityEngine.UI.dll" Private="False" />
+    <Reference Include="Oculus.VR" HintPath="$(GorillaManagedPath)\Oculus.VR.dll" Private="False" />
+    <Reference Include="AstarPathfindingProject" HintPath="$(GorillaManagedPath)\AstarPathfindingProject.dll" Private="False" />
+    <Reference Include="PhotonVoice" HintPath="$(GorillaManagedPath)\PhotonVoice.dll" Private="False" />
+    <Reference Include="PhotonVoice.API" HintPath="$(GorillaManagedPath)\PhotonVoice.API.dll" Private="False" />
+    <Reference Include="UnityEngine.AnimationModule" HintPath="$(GorillaManagedPath)\UnityEngine.AnimationModule.dll" Private="False" />
+    <Reference Include="UnityEngine.ParticleSystemModule" HintPath="$(GorillaManagedPath)\UnityEngine.ParticleSystemModule.dll" Private="False" />
+    <Reference Include="UnityEngine.TextRenderingModule" HintPath="$(GorillaManagedPath)\UnityEngine.TextRenderingModule.dll" Private="False" />
+    <Reference Include="BepInEx" HintPath="$(BepInExCorePath)\BepInEx.dll" Private="False" />
+    <Reference Include="0Harmony" HintPath="$(BepInExCorePath)\0Harmony.dll" Private="False" />
+    <Reference Include="UnityEngine.ImageConversionModule" HintPath="$(GorillaManagedPath)\UnityEngine.ImageConversionModule.dll" Private="False" />
+    <Reference Include="UnityEngine.UnityWebRequestAudioModule" HintPath="$(GorillaManagedPath)\UnityEngine.UnityWebRequestAudioModule.dll" Private="False" />
+    <Reference Include="UnityEngine.UnityWebRequestTextureModule" HintPath="$(GorillaManagedPath)\UnityEngine.UnityWebRequestTextureModule.dll" Private="False" />
+    <Reference Include="Unity.InputSystem" HintPath="$(GorillaManagedPath)\Unity.InputSystem.dll" Private="False" />
+    <Reference Include="UnityEngine.XRModule" HintPath="$(GorillaManagedPath)\UnityEngine.XRModule.dll" Private="False" />
+    <Reference Include="SteamVR" HintPath="$(GorillaManagedPath)\SteamVR.dll" Private="False" />
+    <Reference Include="SteamVR_Actions" HintPath="$(GorillaManagedPath)\SteamVR_Actions.dll" Private="False" />
+    <Reference Include="Newtonsoft.Json" HintPath="$(GorillaManagedPath)\Newtonsoft.Json.dll" Private="False" />
+    <Reference Include="UnityEngine.UIModule" HintPath="$(GorillaManagedPath)\UnityEngine.UIModule.dll" Private="False" />
+    <Reference Include="PhotonVoice.PUN" HintPath="$(GorillaManagedPath)\PhotonVoice.PUN.dll" Private="False" />
+    <Reference Include="Unity.Addressables" HintPath="$(GorillaManagedPath)\Unity.Addressables.dll" Private="False" />
+    <Reference Include="Unity.Localization" HintPath="$(GorillaManagedPath)\Unity.Localization.dll" Private="False" />
+  </ItemGroup>
+</Project>
