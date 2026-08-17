@@ -1,4 +1,4 @@
-\# nxo rebuilt
+# nxo rebuilt
 
 you can compile it fine
 
