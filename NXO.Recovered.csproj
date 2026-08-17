@@ -8,7 +8,7 @@
     <BepInExCorePath>$(GorillaTagRoot)\BepInEx\core</BepInExCorePath>
   </PropertyGroup>
   <PropertyGroup>
-    <LangVersion>14.0</LangVersion>
+    <LangVersion>latest</LangVersion>
 		<AllowUnsafeBlocks>False</AllowUnsafeBlocks>
     <CheckForOverflowUnderflow>False</CheckForOverflowUnderflow>
   </PropertyGroup>

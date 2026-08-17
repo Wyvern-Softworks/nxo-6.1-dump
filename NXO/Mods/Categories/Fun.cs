@@ -673,11 +673,6 @@ public class Fun
 		}
 	}
 
-	[IteratorStateMachine(typeof(ServerSideEquipRoutine_StateMachine101))]
-	private static IEnumerator ServerSideEquipRoutine()
-	{
-		return new ServerSideEquipRoutine_StateMachine101(0);
-	}
 
 	public static void SplashSelf()
 	{
@@ -1599,16 +1594,140 @@ public class Fun
 		}
 	}
 
-	public static void StartServerSideEquip()
-	{
-		if (!ServerSideEquipRoutine_StateMachine101_State_10 && !((Object)(object)CoroutineHelper.Instance == (Object)null) && !((Object)(object)Variables.Variables_Reference_09 == (Object)null) && !((Object)(object)Variables.Variables_Reference_09.bodyCollider == (Object)null))
-		{
-			ServerSideEquipRoutine_StateMachine101_State_10 = true;
-			((MonoBehaviour)CoroutineHelper.Instance).StartCoroutine(ServerSideEquipRoutine());
-		}
-	}
+    public static void StartServerSideEquip()
+    {
+        if (isEquippingCosmetic ||
+            GorillaTagger.Instance == null ||
+            GorillaTagger.Instance.bodyCollider == null)
+        {
+            return;
+        }
 
-	public static void AddCosmeticToCart()
+        isEquippingCosmetic = true;
+        GorillaTagger.Instance.StartCoroutine(ServerSideEquipRoutine());
+    }
+
+
+    private static bool isEquippingCosmetic;
+    private static bool isCustomCosmeticSetApplied;
+    private static int[] savedOriginalCosmeticSet;
+    private static int[] customCosmeticSet;
+
+    public static void EquipCustomCosmeticSet(bool enable)
+    {
+        if (enable == isCustomCosmeticSetApplied ||
+            CosmeticsController.instance == null ||
+            GTPlayer.Instance == null ||
+            GorillaTagger.Instance.myVRRig == null)
+        {
+            return;
+        }
+
+        isCustomCosmeticSetApplied = enable;
+        int[] packedSet;
+
+        if (enable)
+        {
+            savedOriginalCosmeticSet = CosmeticsController.instance.currentWornSet.ToPackedIDArray();
+            if (customCosmeticSet == null)
+            {
+                customCosmeticSet = PackCosmeticStrings(Enumerable.Repeat("LMAJU.", 16).ToArray());
+            }
+            packedSet = customCosmeticSet;
+        }
+        else
+        {
+            packedSet = savedOriginalCosmeticSet;
+        }
+
+        if (packedSet == null) return;
+
+        CosmeticsController.CosmeticSet newSet = new CosmeticsController.CosmeticSet(packedSet, CosmeticsController.instance);
+        CosmeticsController.instance.currentWornSet = newSet;
+        VRRig.LocalRig.cosmeticSet = newSet;
+
+        GorillaTagger.Instance.myVRRig.SendRPC("RPC_UpdateCosmeticsWithTryonPacked", RpcTarget.All, new object[]
+        {
+                packedSet,
+                CosmeticsController.instance.tryOnSet.ToPackedIDArray(),
+                false
+        });
+    }
+
+    public static int[] PackCosmeticStrings(string[] cosmetics)
+    {
+        if (CosmeticsController.instance == null) return Array.Empty<int>();
+        return new CosmeticsController.CosmeticSet(cosmetics, CosmeticsController.instance).ToPackedIDArray();
+    }
+
+    private static readonly Vector3 CosmeticEquipPosition = new Vector3(-51.7836f, 16.7865f, -119.6697f);
+
+    private static IEnumerator ServerSideEquipRoutine()
+    {
+        try
+        {
+            if (GTPlayer.Instance == null || GTPlayer.Instance.bodyCollider == null)
+                yield break;
+
+            Vector3 origin = GTPlayer.Instance.bodyCollider.transform.position;
+            GTZone[] savedZones = null;
+
+            if (ZoneManagement.instance != null && !ZoneManagement.IsInZone(GTZone.city))
+            {
+                savedZones = ZoneManagement.instance.activeZones.ToArray();
+                List<GTZone> withCity = new List<GTZone>(ZoneManagement.instance.activeZones) { GTZone.city };
+                ZoneManagement.SetActiveZones(withCity.ToArray());
+
+                float timeout = Time.time + 5f;
+                while (!ZoneManagement.IsZoneLoaded(GTZone.city) && Time.time < timeout)
+                {
+                    yield return null;
+                }
+                yield return new WaitForSeconds(0.5f);
+            }
+
+            TeleportTo(CosmeticEquipPosition);
+            yield return new WaitForSeconds(1f);
+
+            isCustomCosmeticSetApplied = false;
+            EquipCustomCosmeticSet(true);
+            yield return new WaitForSeconds(0.5f);
+			
+            TeleportTo(origin);
+            if (savedZones != null && ZoneManagement.instance != null)
+            {
+                ZoneManagement.SetActiveZones(savedZones);
+            }
+        }
+        finally
+        {
+            isEquippingCosmetic = false;
+        }
+    }
+
+    public static void TeleportTo(Vector3 position)
+    {
+        if (GorillaTagger.Instance == null ||
+            GorillaTagger.Instance.bodyCollider == null ||
+            GTPlayer.Instance == null)
+        {
+            return;
+        }
+
+        Vector3 teleportPosition =
+            position -
+            GorillaTagger.Instance.bodyCollider.transform.position +
+            GorillaTagger.Instance.transform.position;
+
+        GTPlayer.Instance.TeleportTo(
+            teleportPosition,
+            GTPlayer.Instance.transform.rotation,
+            false,
+            false);
+    }
+
+
+    public static void AddCosmeticToCart()
 	{
 		((CosmeticsController)CosmeticsController.instance).currentCart.Insert(0, ServerSideEquipRoutine_StateMachine101_Reference_05);
 		((CosmeticsController)CosmeticsController.instance).UpdateShoppingCart();
